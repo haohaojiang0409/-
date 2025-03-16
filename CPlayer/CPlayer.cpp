@@ -11,7 +11,7 @@ CPlayer::~CPlayer()
 void CPlayer::init(int back_w, int back_h)
 {
 	::loadimage(&m_img, L"./res/player.jpg");
-	::loadimage(&m_img, L"./res/player_mask.jpg");
+	::loadimage(&m_maskImg, L"./res/player_mask.jpg");
 
 	m_x = (BACK_W - PLAYER_W) / 2;
 	m_y = BACK_H - PLAYER_H;
@@ -25,18 +25,18 @@ void CPlayer::show()
 
 void CPlayer::move(int direct, int step)
 {
-	switch (direct) {
-	case VK_LEFT:
-		m_x - step >= 0 ? m_x -= step : m_x = 0;
-		break;
-	case VK_UP:
-		m_y - step >= 0 ? m_y -= step : m_y = 0;
-		break;
-	case VK_DOWN:
-		m_y - step >= (BACK_H - PLAYER_H) ? m_y += step : m_y = (BACK_H - PLAYER_H);
-		break;
-	case VK_RIGHT:
-		m_x + step <= (BACK_W - PLAYER_W) ? m_x += step : m_x = (BACK_W - PLAYER_W);
-		break;
-	}
+    switch (direct) {
+    case VK_LEFT:
+        m_x - step >= 0 ? m_x -= step : m_x = 0;
+        break;
+    case VK_UP:
+        m_y - step >= 0 ? m_y -= step : m_y = 0;
+        break;
+    case VK_DOWN:
+        m_y + step <= (BACK_H - PLAYER_H) ? m_y += step : m_y = (BACK_H - PLAYER_H);
+        break;
+    case VK_RIGHT:
+        m_x + step <= (BACK_W - PLAYER_W) ? m_x += step : m_x = (BACK_W - PLAYER_W);
+        break;
+    }
 }

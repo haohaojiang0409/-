@@ -1,5 +1,12 @@
 #pragma once
 #include "../config/config.h"
+#include "../CBack/CBack.h"
+#include "../CPlayer/CPlayer.h"
+#include "../CGameFrame/CGameFrame.h"
+#include "../CPlaneApp/CPlaneApp.h"
+#include "../CGunnerList/CGunner.h"
+class CBack;
+class CPlayer;
 class CPlaneApp : public CGameFrame {
 public:
 
@@ -7,9 +14,9 @@ public:
 
 	CPlayer m_player;
 
-	CGunnerList m_lstGunner;
+	//CGunnerList m_lstGunner;
 
-	CFoeList m_lstFoe;
+	//CFoeList m_lstFoe;
 
 	int m_score;
 
@@ -21,7 +28,7 @@ public:
 
 	void On_Close();
 
-	void InitMsgMap();
+	void AddMsgMap();
 
 	void On_WM_KEYDOWN(int);
 
