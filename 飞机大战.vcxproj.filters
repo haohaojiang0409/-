@@ -54,6 +54,9 @@
     <ClCompile Include="CPlaneApp\CPlaneApp.cpp">
       <Filter>CPlaneApp</Filter>
     </ClCompile>
+    <ClCompile Include="CGameFrame\CGameFrame.cpp">
+      <Filter>CGameFrame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBack\CBack.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="CPlaneApp\CPlaneApp.h">
       <Filter>CPlaneApp</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameFrame\CGameFrame.h">
+      <Filter>CGameFrame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

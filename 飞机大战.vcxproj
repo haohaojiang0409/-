@@ -133,6 +133,7 @@
     <ClCompile Include="CFoeList\CFoeList.cpp" />
     <ClCompile Include="CFoeList\CFoeMid.cpp" />
     <ClCompile Include="CFoeList\CFoeSma.cpp" />
+    <ClCompile Include="CGameFrame\CGameFrame.cpp" />
     <ClCompile Include="CGunnerList\CGunner.cpp" />
     <ClCompile Include="CGunnerList\CGunnerList.cpp" />
     <ClCompile Include="CPlaneApp\CPlaneApp.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="CFoeList\CFoeList.h" />
     <ClInclude Include="CFoeList\CFoeMid.h" />
     <ClInclude Include="CFoeList\CFoeSma.h" />
+    <ClInclude Include="CGameFrame\CGameFrame.h" />
     <ClInclude Include="CGunnerList\CGunner.h" />
     <ClInclude Include="CGunnerList\CGunnerList.h" />
     <ClInclude Include="config\config.h" />

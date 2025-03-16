@@ -1,6 +1,6 @@
 #pragma once
 #include "../config/config.h"
-class CPlaneApp {
+class CPlaneApp : public CGameFrame {
 public:
 
 	CBack m_back;
