@@ -23,6 +23,10 @@ public:
 
 	void InitMsgMap();
 
+	void On_WM_KEYDOWN(int);
+
+	void On_WM_TIMER(WPARAM, LPARAM);
+
 	void setTimer();
 
 	void killTimer();
