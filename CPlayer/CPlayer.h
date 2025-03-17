@@ -1,5 +1,6 @@
 #pragma once
 #include "../config/config.h"
+#include "../CGunnerList/CGunner.h"
 class CPlayer {
 public:
 	//ԭͼ
@@ -17,7 +18,7 @@ public:
 
 	void init(int back_w, int back_h);
 
-	//CGunner* sendGun();
+	CGunner* sendGun();
 
 	void show();
 

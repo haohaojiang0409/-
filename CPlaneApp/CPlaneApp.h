@@ -5,6 +5,7 @@
 #include "../CGameFrame/CGameFrame.h"
 #include "../CPlaneApp/CPlaneApp.h"
 #include "../CGunnerList/CGunner.h"
+#include "../CGunnerList/CGunnerList.h"
 class CBack;
 class CPlayer;
 class CPlaneApp : public CGameFrame {
@@ -14,7 +15,7 @@ public:
 
 	CPlayer m_player;
 
-	//CGunnerList m_lstGunner;
+	CGunnerList m_lstGunner;
 
 	//CFoeList m_lstFoe;
 

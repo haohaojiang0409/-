@@ -36,7 +36,10 @@ void CPlaneApp::AddMsgMap()
 }
 
 void CPlaneApp::On_WM_KEYDOWN(int key) {
-	m_player.move(key, PLAYER_MOVE_STEP);
+	//m_player.move(key, PLAYER_MOVE_STEP);
+	if (key == VK_SPACE) {
+		m_lstGunner.m_gunList.push_back(m_player.sendGun());
+	}
 }
 
 void CPlaneApp::On_WM_TIMER(WPARAM w, LPARAM l) {
@@ -50,21 +53,22 @@ void CPlaneApp::On_WM_TIMER(WPARAM w, LPARAM l) {
 		case CHECK_KEYDOWN_TIMERID:
 		{
 			if (::GetAsyncKeyState(VK_UP)) {
-				cout << "按下上键" << endl;
 				m_player.move(VK_UP, PLAYER_MOVE_STEP);
 			}
 			if (::GetAsyncKeyState(VK_DOWN)) {
-				cout << "按下下键" << endl;
 				m_player.move(VK_DOWN, PLAYER_MOVE_STEP);
 			}
 			if (::GetAsyncKeyState(VK_LEFT)) {
-				cout << "按下左键" << endl;
 				m_player.move(VK_LEFT, PLAYER_MOVE_STEP);
 			}
 			if (::GetAsyncKeyState(VK_RIGHT)) {
-				cout << "按下右键" << endl;
 				m_player.move(VK_RIGHT, PLAYER_MOVE_STEP);
 			}
+		}
+		break;
+		case GUNNER_SEND_TIMERID:
+		{
+			m_lstGunner.moveAll();
 		}
 		break;
 	}
@@ -73,19 +77,19 @@ void CPlaneApp::On_WM_TIMER(WPARAM w, LPARAM l) {
 void CPlaneApp::setTimer()
 {
 	//1.2设定背景移动的定时器,定时器每隔80s会发送WM_TIMER的消息，需要某个函数进行接受来进行操作
-	if (::SetTimer(m_hwnd/*窗口句柄：操作窗口资源的标识*/
+	::SetTimer(m_hwnd/*窗口句柄：操作窗口资源的标识*/
 		, BACK_MOVE_TIMERID/*定时器的id*/
 		, BACK_TIMER_INTERVAL/*定时器触发间隔频率*/
-		, nullptr)) {
-		cout << "设置背景移动定时器成功" << endl;
-	}
+		, nullptr);
 	//2.1设置检测键盘按下的定时器
-	if (::SetTimer(m_hwnd
+	::SetTimer(m_hwnd
 		, CHECK_KEYDOWN_TIMERID
 		, CHECK_KEYDOWN_INTERVAL
-		, nullptr)) {
-		cout << "设置键盘定时器成功" << endl;
-	}
+		, nullptr);
+	::SetTimer(m_hwnd
+		, GUNNER_SEND_TIMERID
+		, GUNNER_SEND_INTERVAL
+		, nullptr);
 }
 
 void CPlaneApp::killTimer()

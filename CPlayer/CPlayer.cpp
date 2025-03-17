@@ -17,6 +17,17 @@ void CPlayer::init(int back_w, int back_h)
 	m_y = BACK_H - PLAYER_H;
 }
 
+CGunner* CPlayer::sendGun()
+{
+    CGunner * pGunner = new CGunner;
+    //
+    int x = m_x + PLAYER_W / 2;
+    int y = m_y - GUNNER_H;
+    pGunner->init(x, y);
+
+    return pGunner;
+}
+
 void CPlayer::show()
 {
 	::putimage(m_x, m_y, &m_maskImg, SRCPAINT);	//屏蔽图，位或方式传输

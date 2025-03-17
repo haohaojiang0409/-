@@ -22,6 +22,15 @@
     <Filter Include="CPlaneApp">
       <UniqueIdentifier>{729e3ffb-b99d-425e-86d7-c942e1f31c12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CFoeList\FoeBig">
+      <UniqueIdentifier>{4005ea17-0c5c-4f1d-b987-6ea0f24d005d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFoeList\FoeSma">
+      <UniqueIdentifier>{7c982766-1503-484f-8ccb-f4ffc875129d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFoeList\FoeMid">
+      <UniqueIdentifier>{ae2e87df-79a3-47be-a41a-318f792bd4a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBack\CBack.cpp">
@@ -30,16 +39,7 @@
     <ClCompile Include="CFoeList\CFoe.cpp">
       <Filter>CFoeList</Filter>
     </ClCompile>
-    <ClCompile Include="CFoeList\CFoeBig.cpp">
-      <Filter>CFoeList</Filter>
-    </ClCompile>
     <ClCompile Include="CFoeList\CFoeList.cpp">
-      <Filter>CFoeList</Filter>
-    </ClCompile>
-    <ClCompile Include="CFoeList\CFoeMid.cpp">
-      <Filter>CFoeList</Filter>
-    </ClCompile>
-    <ClCompile Include="CFoeList\CFoeSma.cpp">
       <Filter>CFoeList</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer\CPlayer.cpp">
@@ -57,24 +57,21 @@
     <ClCompile Include="CGameFrame\CGameFrame.cpp">
       <Filter>CGameFrame</Filter>
     </ClCompile>
+    <ClCompile Include="CFoeList\CFoeBig.cpp">
+      <Filter>CFoeList\FoeBig</Filter>
+    </ClCompile>
+    <ClCompile Include="CFoeList\CFoeSma.cpp">
+      <Filter>CFoeList\FoeSma</Filter>
+    </ClCompile>
+    <ClCompile Include="CFoeList\CFoeMid.cpp">
+      <Filter>CFoeList\FoeMid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBack\CBack.h">
       <Filter>CBack</Filter>
     </ClInclude>
-    <ClInclude Include="CFoeList\CFoe.h">
-      <Filter>CFoeList</Filter>
-    </ClInclude>
-    <ClInclude Include="CFoeList\CFoeBig.h">
-      <Filter>CFoeList</Filter>
-    </ClInclude>
     <ClInclude Include="CFoeList\CFoeList.h">
-      <Filter>CFoeList</Filter>
-    </ClInclude>
-    <ClInclude Include="CFoeList\CFoeSma.h">
-      <Filter>CFoeList</Filter>
-    </ClInclude>
-    <ClInclude Include="CFoeList\CFoeMid.h">
       <Filter>CFoeList</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer\CPlayer.h">
@@ -94,6 +91,18 @@
     </ClInclude>
     <ClInclude Include="CGameFrame\CGameFrame.h">
       <Filter>CGameFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="CFoeList\CFoe.h">
+      <Filter>CFoeList</Filter>
+    </ClInclude>
+    <ClInclude Include="CFoeList\CFoeBig.h">
+      <Filter>CFoeList\FoeBig</Filter>
+    </ClInclude>
+    <ClInclude Include="CFoeList\CFoeSma.h">
+      <Filter>CFoeList\FoeSma</Filter>
+    </ClInclude>
+    <ClInclude Include="CFoeList\CFoeMid.h">
+      <Filter>CFoeList\FoeMid</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

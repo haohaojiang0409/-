@@ -169,7 +169,7 @@ void CGameFrame::InitGame(int width, int height, int x, int y, const WCHAR* p)
 	::SetWindowText(m_hwnd, p);//设置窗口标题
 
 	//设置窗口的属性
-	::SetWindowLong(m_hwnd, GWLP_WNDPROC/*是32位下的宏*/, (LONG)&RunGame);  //绑定窗口的回调函数
+	::SetWindowLong(m_hwnd, GWL_WNDPROC/*是32位下的宏*/, (LONG)&RunGame);  //绑定窗口的回调函数
 
 	AddMsgMap();
 

@@ -1,18 +1,14 @@
 #include <easyx.h>
 #include <iostream>
 using namespace std;
-//#include "../CBack/CBack.h"
-//#include "../CPlayer/CPlayer.h"
-//#include "../CGameFrame/CGameFrame.h"
-//#include "../CPlaneApp/CPlaneApp.h"
-//#include "../CGunnerList/CGunner.h"
+
 //背景长宽
 #define BACK_H				    800 
 #define BACK_W				    600
 							    
-#define BACK_TIMER_INTERVAL		80
+#define BACK_TIMER_INTERVAL		70
 #define BACK_MOVE_TIMERID	    1
-#define BACK_MOVE_STEP		    2
+#define BACK_MOVE_STEP		    10
 #define PLAYER_MOVE_STEP	    5
 
 //检测 
@@ -26,4 +22,39 @@ using namespace std;
 //炮弹发射器的宽度
 #define GUNNER_W				6
 #define GUNNER_H				20
+
+//炮弹定时器的频率，时间ID
 #define GUNNER_MOVE_STEP		3
+#define GUNNER_SEND_TIMERID		3
+#define GUNNER_SEND_INTERVAL	20
+
+//敌人飞机的宽度高度
+//大号
+#define FOEBIG_W				150				
+#define FOEBIG_H				100
+//移动的步长
+#define FOEBIG_MOVE_STEP		2
+//中号
+#define FOEMID_W				80			
+#define FOEMID_H				60
+//移动的步长
+#define FOEMID_MOVE_STEP		4
+
+//小号
+#define FOESMA_W				40				
+#define FOESMA_H				40
+//移动的步长
+#define FOESMA_MOVE_STEP		5
+
+//炮弹每次的伤害
+#define GUNNER_BLOOD			1
+
+//敌人飞机的血量
+#define FOEBIG_BLOOD			(GUNNER_BLOOD * 5)
+#define FOEMID_BLOOD			(GUNNER_BLOOD * 3)
+#define FOESMA_BLOOD			(GUNNER_BLOOD * 1)
+
+//敌人飞机的下标
+#define BIGINIT_SHOWID				4
+#define MIDINIT_SHOWID				3
+#define SMAINIT_SHOWID				2
