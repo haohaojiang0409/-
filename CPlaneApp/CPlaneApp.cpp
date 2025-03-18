@@ -1,8 +1,9 @@
 #include "CPlaneApp.h"
-
+#include <random>
 WND_PARAM(600 + 16, 800 + 39, 500, 100 ,L"飞机大战");
 
 CREATE_OBJECT(CPlaneApp)
+
 
 void CPlaneApp::On_Init()
 {
@@ -21,6 +22,10 @@ void CPlaneApp::On_Paint()
 	m_back.show();
 	//2.调用玩家飞机贴图函数
 	m_player.show();
+	//3.显示炮弹
+	m_lstGunner.showAll();
+	//4.显示敌人飞机
+	m_lstFoe.showAll();
 }
 
 void CPlaneApp::On_Close()
@@ -71,6 +76,33 @@ void CPlaneApp::On_WM_TIMER(WPARAM w, LPARAM l) {
 			m_lstGunner.moveAll();
 		}
 		break;
+		case FOE_MOVE_TIMERID: {
+			m_lstFoe.moveAll();
+		}
+		break;
+		case FOE_CREATE_TIMERID: {
+			//用n来确定创建各个敌人飞机的概率
+			int n = CFoe::rd() % 101;
+			CFoe* pFoe = nullptr;
+			//n <= 45创建小飞机
+			if (n <= 45) {
+				pFoe = new CFoeSma;
+			}
+			else if (n > 45 && n <= 80) {
+				pFoe = new CFoeMid;
+			}
+			if (n > 80) {
+				pFoe = new CFoeBig;
+			}
+			//45 < n <= 80创建中飞机
+			//n > 80 创建大飞机
+			//如果创建了飞机，那么就放入敌人飞机链表中
+			if (pFoe) {
+				pFoe->init();
+				m_lstFoe.m_normalFoeList.push_back(pFoe);
+			}
+		}
+		break;
 	}
 }
 
@@ -89,6 +121,16 @@ void CPlaneApp::setTimer()
 	::SetTimer(m_hwnd
 		, GUNNER_SEND_TIMERID
 		, GUNNER_SEND_INTERVAL
+		, nullptr);
+	//设置敌人飞机移动的频率
+	::SetTimer(m_hwnd
+		, FOE_MOVE_TIMERID
+		, FOE_MOVE_INTERVAL
+		, nullptr);
+	//设置创建飞机的频率
+	::SetTimer(m_hwnd
+		, FOE_CREATE_TIMERID
+		, FOE_CREATE_INTERVAL
 		, nullptr);
 }
 

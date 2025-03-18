@@ -14,6 +14,7 @@ CGunnerList::~CGunnerList()
 		}
 		++ite;
 	}
+	m_gunList.clear();
 }
 
 void CGunnerList::showAll()

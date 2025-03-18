@@ -17,8 +17,8 @@ CFoeList::~CFoeList()
 	}
 	for (CFoe*& pFoe : m_boomFoeList) {
 		if (pFoe) {
-			delete (*ite);
-			(*ite) = nullptr;
+			delete pFoe;
+			pFoe = nullptr;
 		}
 	}
 }
@@ -30,6 +30,7 @@ void CFoeList::showAll()
 			pFoe->show();
 		}
 	}
+	
 }
 
 void CFoeList::moveAll()
@@ -48,14 +49,14 @@ void CFoeList::moveAll()
 			if (typeid(**ite) == typeid(CFoeSma)) {
 				(*ite)->move(FOESMA_MOVE_STEP);
 			}
-			if ((*ite)->m_y >= BACK_H) {
-				//删除敌人飞机
-				delete (*ite);
-				(*ite) = nullptr;
-				//删除节点
-				ite = m_normalFoeList.erase(ite);
-				continue;
-			}
+		}
+		if ((*ite)->m_y >= BACK_H) {
+			//删除敌人飞机
+			delete (*ite);
+			(*ite) = nullptr;
+			//删除节点
+			ite = m_normalFoeList.erase(ite);
+			continue;
 		}
 		++ite;
 	}

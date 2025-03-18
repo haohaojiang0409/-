@@ -1,5 +1,6 @@
 #pragma once 
 #include "../config/config.h"
+class CFoe;
 class CGunner {
 public:
 
@@ -19,7 +20,7 @@ public:
 
 	void move(int step);
 
-	//bool isHitFoe(CFoe* pFoe);
+	bool isHitFoe(CFoe* pFoe);
 
 
 

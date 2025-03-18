@@ -6,8 +6,9 @@
 #include "../CPlaneApp/CPlaneApp.h"
 #include "../CGunnerList/CGunner.h"
 #include "../CGunnerList/CGunnerList.h"
-class CBack;
-class CPlayer;
+#include "../CFoeList/CFoeList.h"
+
+
 class CPlaneApp : public CGameFrame {
 public:
 
@@ -17,7 +18,7 @@ public:
 
 	CGunnerList m_lstGunner;
 
-	//CFoeList m_lstFoe;
+	CFoeList m_lstFoe;
 
 	int m_score;
 

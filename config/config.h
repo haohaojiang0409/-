@@ -28,6 +28,12 @@ using namespace std;
 #define GUNNER_SEND_TIMERID		3
 #define GUNNER_SEND_INTERVAL	20
 
+//敌人飞机的移动频率
+#define FOE_MOVE_TIMERID		4
+#define FOE_MOVE_INTERVAL		80
+//敌人飞机的出现频率
+#define FOE_CREATE_TIMERID		5
+#define FOE_CREATE_INTERVAL		2000
 //敌人飞机的宽度高度
 //大号
 #define FOEBIG_W				150				
@@ -41,7 +47,7 @@ using namespace std;
 #define FOEMID_MOVE_STEP		4
 
 //小号
-#define FOESMA_W				40				
+#define FOESMA_W				60				
 #define FOESMA_H				40
 //移动的步长
 #define FOESMA_MOVE_STEP		5

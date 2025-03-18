@@ -1,4 +1,4 @@
-#include "CFoe.h"
+#include "../CFoeList/CFoe.h"
 class CFoeSma :public CFoe {
 public:
 
