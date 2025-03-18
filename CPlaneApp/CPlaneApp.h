@@ -24,6 +24,10 @@ public:
 
 	IMAGE m_scoreImg;
 public:
+	CPlaneApp();
+
+	~CPlaneApp();
+
 	void On_Init();
 
 	void On_Paint();

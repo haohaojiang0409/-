@@ -30,7 +30,11 @@ void CFoeList::showAll()
 			pFoe->show();
 		}
 	}
-	
+	for (CFoe* cf : m_boomFoeList) {
+		if (cf) {
+			cf->show();
+		}
+	}
 }
 
 void CFoeList::moveAll()

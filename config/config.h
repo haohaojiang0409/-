@@ -26,7 +26,7 @@ using namespace std;
 //炮弹定时器的频率，时间ID
 #define GUNNER_MOVE_STEP		3
 #define GUNNER_SEND_TIMERID		3
-#define GUNNER_SEND_INTERVAL	20
+#define GUNNER_SEND_INTERVAL	5
 
 //敌人飞机的移动频率
 #define FOE_MOVE_TIMERID		4
@@ -34,6 +34,11 @@ using namespace std;
 //敌人飞机的出现频率
 #define FOE_CREATE_TIMERID		5
 #define FOE_CREATE_INTERVAL		2000
+//攻击定时器
+#define FOE_HIT_TIMERID			6
+#define FOE_HIT_INTERVAL		5
+
+
 //敌人飞机的宽度高度
 //大号
 #define FOEBIG_W				150				

@@ -46,20 +46,20 @@ bool CGunner::isHitFoe(CFoe* pFoe)
 		int y = m_y + GUNNER_H / 2;
 		//判断是哪种飞机:typeid方法
 		if (typeid(*pFoe) == typeid(CFoeBig)) {
-			if (m_x <= x && x <= m_x + FOEBIG_W &&
-				m_y <= y && y <= m_y + FOEBIG_H) {
+			if (pFoe->m_x <= x && x <= pFoe->m_x + FOEBIG_W &&
+				pFoe->m_y <= y && y <= pFoe->m_y + FOEBIG_H) {
 				return true;
 			}
 		}
 		else if (typeid(*pFoe) == typeid(CFoeMid)) {
-			if (m_x <= x && x <= m_x + FOEMID_W &&
-				m_y <= y && y <= m_y + FOEMID_H) {
+			if (pFoe->m_x <= x && x <= pFoe->m_x + FOEMID_W &&
+				pFoe->m_y <= y && y <= pFoe->m_y + FOEMID_H) {
 				return true;
 			}
 		}
 		else if (typeid(*pFoe) == typeid(CFoeSma)) {
-			if (m_x <= x && x <= m_x + FOESMA_W &&
-				m_y <= y && y <= m_y + FOESMA_H) {
+			if (pFoe->m_x <= x && x <= pFoe->m_x + FOESMA_W &&
+				pFoe->m_y <= y && y <= pFoe->m_y + FOESMA_H) {
 				return true;
 			}
 		}

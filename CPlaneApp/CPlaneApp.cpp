@@ -5,9 +5,18 @@ WND_PARAM(600 + 16, 800 + 39, 500, 100 ,L"飞机大战");
 CREATE_OBJECT(CPlaneApp)
 
 
+CPlaneApp::CPlaneApp():m_score(0)
+{
+}
+
+CPlaneApp::~CPlaneApp()
+{
+}
+
 void CPlaneApp::On_Init()
 {
 	//游戏开始
+	::loadimage(&m_scoreImg, L"./res/card.png", 100, 40);
 	//1.调用背景加载函数
 	m_back.init();
 	//2.调用玩家飞机初始化函数
@@ -26,6 +35,8 @@ void CPlaneApp::On_Paint()
 	m_lstGunner.showAll();
 	//4.显示敌人飞机
 	m_lstFoe.showAll();
+	//5.显示分数
+	showScore();
 }
 
 void CPlaneApp::On_Close()
@@ -103,6 +114,51 @@ void CPlaneApp::On_WM_TIMER(WPARAM w, LPARAM l) {
 			}
 		}
 		break;
+		case FOE_HIT_TIMERID:
+		{
+			//初始默认不爆炸
+			bool isBoom = false;
+			//开始遍历敌人飞机链表
+			std::list<CFoe*>::iterator iteFoe = m_lstFoe.m_normalFoeList.begin();
+			while (iteFoe != m_lstFoe.m_normalFoeList.end()) {
+				//判断是否和玩家飞机相撞
+				if ((*iteFoe)->isHitPlayer(&m_player)) {
+					//碰撞则，游戏结束
+					killTimer();
+					//弹出弹出框，提示游戏结束
+					::MessageBox(m_hwnd, L"游戏结束", L"提示", MB_OK);
+					//程序退出，通过消息，模拟出手动点击x的功能
+					::PostMessage(m_hwnd, WM_CLOSE/*窗口关闭的功能*/, 0, 0);
+					return;
+				}
+				//判断是否和炮弹相撞
+				//1.先进行炮弹的迭代器遍历
+				std::list<CGunner*>::iterator iteGun = m_lstGunner.m_gunList.begin();
+				while (iteGun != m_lstGunner.m_gunList.end()) {
+					//2.在进行检测是否撞上了敌人飞机
+					if ((*iteGun)->isHitFoe(*iteFoe)) {
+						//3.删除炮弹
+						delete (*iteGun);
+						(*iteGun) = nullptr;
+
+						iteGun = m_lstGunner.m_gunList.erase(iteGun);
+						//4.敌人飞机掉血
+						(*iteFoe)->reduceBlood(GUNNER_BLOOD);
+						//5.判断血量是否为0
+						if ((*iteFoe)->m_blood <= 0) {
+							m_lstFoe.m_boomFoeList.push_back((*iteFoe));
+							iteFoe = m_lstFoe.m_normalFoeList.erase(iteFoe);
+							isBoom = true;
+							break;
+						}
+						continue;
+					}
+					iteGun++;
+				}
+				if (isBoom) isBoom = false;
+				else iteFoe++;
+			}
+		}
 	}
 }
 
@@ -132,12 +188,44 @@ void CPlaneApp::setTimer()
 		, FOE_CREATE_TIMERID
 		, FOE_CREATE_INTERVAL
 		, nullptr);
+	//设置飞机撞击定时器
+	::SetTimer(m_hwnd
+		, FOE_HIT_TIMERID
+		, FOE_HIT_INTERVAL
+		, nullptr);
 }
 
 void CPlaneApp::killTimer()
 {
+	//1.2设定背景移动的定时器,定时器每隔80s会发送WM_TIMER的消息，需要某个函数进行接受来进行操作
+	::KillTimer(m_hwnd/*窗口句柄：操作窗口资源的标识*/
+		, BACK_MOVE_TIMERID);
+	//2.1设置检测键盘按下的定时器
+	::KillTimer(m_hwnd
+		, CHECK_KEYDOWN_TIMERID);
+	::KillTimer(m_hwnd
+		, GUNNER_SEND_TIMERID);
+	//设置敌人飞机移动的频率
+	::KillTimer(m_hwnd
+		, FOE_MOVE_TIMERID);
+	//设置创建飞机的频率
+	::KillTimer(m_hwnd
+		, FOE_CREATE_TIMERID);
+	//设置飞机撞击定时器
+	::KillTimer(m_hwnd
+		, FOE_HIT_TIMERID);
 }
 
 void CPlaneApp::showScore()
 {
+	//1.加载图片
+	::putimage(0, 0, &m_scoreImg);
+	//2.显示分数
+	wstring ws = L"分数为";
+	wchar_t sc[10] = { 0 };
+	_itow_s(m_score, sc, 10);
+	ws += sc;
+	RECT rect = { 0,0,100,40 };
+	settextcolor(RGB(45, 200, 100));
+	drawtext(ws.c_str(), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 }
