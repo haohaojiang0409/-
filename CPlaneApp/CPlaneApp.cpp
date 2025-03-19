@@ -60,108 +60,127 @@ void CPlaneApp::On_WM_KEYDOWN(int key) {
 
 void CPlaneApp::On_WM_TIMER(WPARAM w, LPARAM l) {
 	switch (w) {
-		case BACK_MOVE_TIMERID:
-		{
-			m_back.move(BACK_MOVE_STEP);
+	case BACK_MOVE_TIMERID:
+	{
+		m_back.move(BACK_MOVE_STEP);
+	}
+	break;
+	//检测方向键是否按下，如果按下则以告诉频率移动
+	case CHECK_KEYDOWN_TIMERID:
+	{
+		if (::GetAsyncKeyState(VK_UP)) {
+			m_player.move(VK_UP, PLAYER_MOVE_STEP);
 		}
-		break;
-		//检测方向键是否按下，如果按下则以告诉频率移动
-		case CHECK_KEYDOWN_TIMERID:
-		{
-			if (::GetAsyncKeyState(VK_UP)) {
-				m_player.move(VK_UP, PLAYER_MOVE_STEP);
-			}
-			if (::GetAsyncKeyState(VK_DOWN)) {
-				m_player.move(VK_DOWN, PLAYER_MOVE_STEP);
-			}
-			if (::GetAsyncKeyState(VK_LEFT)) {
-				m_player.move(VK_LEFT, PLAYER_MOVE_STEP);
-			}
-			if (::GetAsyncKeyState(VK_RIGHT)) {
-				m_player.move(VK_RIGHT, PLAYER_MOVE_STEP);
-			}
+		if (::GetAsyncKeyState(VK_DOWN)) {
+			m_player.move(VK_DOWN, PLAYER_MOVE_STEP);
 		}
-		break;
-		case GUNNER_SEND_TIMERID:
-		{
-			m_lstGunner.moveAll();
+		if (::GetAsyncKeyState(VK_LEFT)) {
+			m_player.move(VK_LEFT, PLAYER_MOVE_STEP);
 		}
-		break;
-		case FOE_MOVE_TIMERID: {
-			m_lstFoe.moveAll();
-		}
-		break;
-		case FOE_CREATE_TIMERID: {
-			//用n来确定创建各个敌人飞机的概率
-			int n = CFoe::rd() % 101;
-			CFoe* pFoe = nullptr;
-			//n <= 45创建小飞机
-			if (n <= 45) {
-				pFoe = new CFoeSma;
-			}
-			else if (n > 45 && n <= 80) {
-				pFoe = new CFoeMid;
-			}
-			if (n > 80) {
-				pFoe = new CFoeBig;
-			}
-			//45 < n <= 80创建中飞机
-			//n > 80 创建大飞机
-			//如果创建了飞机，那么就放入敌人飞机链表中
-			if (pFoe) {
-				pFoe->init();
-				m_lstFoe.m_normalFoeList.push_back(pFoe);
-			}
-		}
-		break;
-		case FOE_HIT_TIMERID:
-		{
-			//初始默认不爆炸
-			bool isBoom = false;
-			//开始遍历敌人飞机链表
-			std::list<CFoe*>::iterator iteFoe = m_lstFoe.m_normalFoeList.begin();
-			while (iteFoe != m_lstFoe.m_normalFoeList.end()) {
-				//判断是否和玩家飞机相撞
-				if ((*iteFoe)->isHitPlayer(&m_player)) {
-					//碰撞则，游戏结束
-					killTimer();
-					//弹出弹出框，提示游戏结束
-					::MessageBox(m_hwnd, L"游戏结束", L"提示", MB_OK);
-					//程序退出，通过消息，模拟出手动点击x的功能
-					::PostMessage(m_hwnd, WM_CLOSE/*窗口关闭的功能*/, 0, 0);
-					return;
-				}
-				//判断是否和炮弹相撞
-				//1.先进行炮弹的迭代器遍历
-				std::list<CGunner*>::iterator iteGun = m_lstGunner.m_gunList.begin();
-				while (iteGun != m_lstGunner.m_gunList.end()) {
-					//2.在进行检测是否撞上了敌人飞机
-					if ((*iteGun)->isHitFoe(*iteFoe)) {
-						//3.删除炮弹
-						delete (*iteGun);
-						(*iteGun) = nullptr;
-
-						iteGun = m_lstGunner.m_gunList.erase(iteGun);
-						//4.敌人飞机掉血
-						(*iteFoe)->reduceBlood(GUNNER_BLOOD);
-						//5.判断血量是否为0
-						if ((*iteFoe)->m_blood <= 0) {
-							m_lstFoe.m_boomFoeList.push_back((*iteFoe));
-							iteFoe = m_lstFoe.m_normalFoeList.erase(iteFoe);
-							isBoom = true;
-							break;
-						}
-						continue;
-					}
-					iteGun++;
-				}
-				if (isBoom) isBoom = false;
-				else iteFoe++;
-			}
+		if (::GetAsyncKeyState(VK_RIGHT)) {
+			m_player.move(VK_RIGHT, PLAYER_MOVE_STEP);
 		}
 	}
-}
+	break;
+	case GUNNER_SEND_TIMERID:
+	{
+		m_lstGunner.moveAll();
+	}
+	break;
+	case FOE_MOVE_TIMERID: {
+		m_lstFoe.moveAll();
+	}
+						 break;
+	case FOE_CREATE_TIMERID: {
+		//用n来确定创建各个敌人飞机的概率
+		int n = CFoe::rd() % 101;
+		CFoe* pFoe = nullptr;
+		//n <= 45创建小飞机
+		if (n <= 45) {
+			pFoe = new CFoeSma;
+		}
+		else if (n > 45 && n <= 80) {
+			pFoe = new CFoeMid;
+		}
+		if (n > 80) {
+			pFoe = new CFoeBig;
+		}
+		//45 < n <= 80创建中飞机
+		//n > 80 创建大飞机
+		//如果创建了飞机，那么就放入敌人飞机链表中
+		if (pFoe) {
+			pFoe->init();
+			m_lstFoe.m_normalFoeList.push_back(pFoe);
+		}
+	}
+						   break;
+	case FOE_HIT_TIMERID:
+	{
+		//初始默认不爆炸
+		bool isBoom = false;
+		//开始遍历敌人飞机链表
+		std::list<CFoe*>::iterator iteFoe = m_lstFoe.m_normalFoeList.begin();
+		while (iteFoe != m_lstFoe.m_normalFoeList.end()) {
+			//判断是否和玩家飞机相撞
+			if ((*iteFoe)->isHitPlayer(&m_player)) {
+				//碰撞则，游戏结束
+				killTimer();
+				//弹出弹出框，提示游戏结束
+				::MessageBox(m_hwnd, L"游戏结束", L"提示", MB_OK);
+				//程序退出，通过消息，模拟出手动点击x的功能
+				::PostMessage(m_hwnd, WM_CLOSE/*窗口关闭的功能*/, 0, 0);
+				return;
+			}
+			//判断是否和炮弹相撞
+			//1.先进行炮弹的迭代器遍历
+			std::list<CGunner*>::iterator iteGun = m_lstGunner.m_gunList.begin();
+			while (iteGun != m_lstGunner.m_gunList.end()) {
+				//2.在进行检测是否撞上了敌人飞机
+				if ((*iteGun)->isHitFoe(*iteFoe)) {
+					//3.删除炮弹
+					delete (*iteGun);
+					(*iteGun) = nullptr;
 
+					iteGun = m_lstGunner.m_gunList.erase(iteGun);
+					//4.敌人飞机掉血
+					(*iteFoe)->reduceBlood(GUNNER_BLOOD);
+					//5.判断血量是否为0
+					if ((*iteFoe)->m_blood <= 0) {
+						m_lstFoe.m_boomFoeList.push_back((*iteFoe));
+						iteFoe = m_lstFoe.m_normalFoeList.erase(iteFoe);
+						isBoom = true;
+						break;
+					}
+					continue;
+				}
+				iteGun++;
+			}
+			if (isBoom) isBoom = false;
+			else iteFoe++;
+		}
+	}
+	break;
+	case CHANGE_PIC_TIMERID:
+	{
+		//删除链表中的敌人飞机
+		list<CFoe*>::iterator ite = m_lstFoe.m_boomFoeList.begin();
+		while (ite != m_lstFoe.m_boomFoeList.end()) {
+			if (*ite) {
+				if (--(*ite)->m_showIndex < 0) {
+					delete (*ite);
+					(*ite) = nullptr;
+
+					ite = m_lstFoe.m_boomFoeList.erase(ite);
+					continue;
+				}
+			}
+			++ite;
+		}
+	}
+	break;
+
+	}
+}
 void CPlaneApp::setTimer()
 {
 	//1.2设定背景移动的定时器,定时器每隔80s会发送WM_TIMER的消息，需要某个函数进行接受来进行操作
@@ -193,27 +212,29 @@ void CPlaneApp::setTimer()
 		, FOE_HIT_TIMERID
 		, FOE_HIT_INTERVAL
 		, nullptr);
+	//设置飞机爆炸定时器
+	::SetTimer(m_hwnd
+		, CHANGE_PIC_TIMERID	
+		, CHANGE_PIC_INTERVAL	
+		, nullptr);
 }
 
 void CPlaneApp::killTimer()
 {
-	//1.2设定背景移动的定时器,定时器每隔80s会发送WM_TIMER的消息，需要某个函数进行接受来进行操作
 	::KillTimer(m_hwnd/*窗口句柄：操作窗口资源的标识*/
 		, BACK_MOVE_TIMERID);
-	//2.1设置检测键盘按下的定时器
 	::KillTimer(m_hwnd
 		, CHECK_KEYDOWN_TIMERID);
 	::KillTimer(m_hwnd
 		, GUNNER_SEND_TIMERID);
-	//设置敌人飞机移动的频率
 	::KillTimer(m_hwnd
 		, FOE_MOVE_TIMERID);
-	//设置创建飞机的频率
 	::KillTimer(m_hwnd
 		, FOE_CREATE_TIMERID);
-	//设置飞机撞击定时器
 	::KillTimer(m_hwnd
 		, FOE_HIT_TIMERID);
+	::KillTimer(m_hwnd
+		, CHANGE_PIC_TIMERID);
 }
 
 void CPlaneApp::showScore()

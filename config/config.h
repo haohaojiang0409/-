@@ -38,6 +38,8 @@ using namespace std;
 #define FOE_HIT_TIMERID			6
 #define FOE_HIT_INTERVAL		5
 
+#define CHANGE_PIC_TIMERID		7
+#define CHANGE_PIC_INTERVAL		200
 
 //敌人飞机的宽度高度
 //大号
